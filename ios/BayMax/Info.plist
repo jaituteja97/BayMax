@@ -74,5 +74,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSMotionUsageDescription</key>
+<string>We need access to your pedometer to track your daily steps.</string>
 </dict>
 </plist>

@@ -1,23 +1,66 @@
 
-import { View, Text, StyleSheet, Animated, Image } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image } from 'react-native'
+import React, { useEffect } from 'react'
 import { Colors, Fonts, lightColors } from '../utils/Constant'
 import { screenHeight, screenWidth } from '../utils/Scaling'
 import LinearGradient from 'react-native-linear-gradient';
 import CustomText from '../components/global/CustomText';
 import LottieView from 'lottie-react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated'
+import Tts from 'react-native-tts';
+import { initilizeListner } from '../utils/listners';
+import { navigate, resetAndNavigate } from '../utils/NavigationUtils';
 
 
 const bottomColor  = [...lightColors].reverse();
 
 const SplashScreen = () => {
+
+    const bayMaxAnimation  = useSharedValue(screenHeight * 0.8)
+    const messageContainerAnimation  = useSharedValue(screenHeight * 0.8)
+
+    const launchAnimation = () =>
+    {
+      messageContainerAnimation.value = 0;
+      setTimeout(() => {
+        bayMaxAnimation.value = 0;
+        Tts.speak('Hello World! I am Baymax')
+      },2000)
+      setTimeout(() => {
+        resetAndNavigate("BayMaxScreen")
+      }, 5000);
+    }
+    
+    const animationsImageStyle = useAnimatedStyle(() => {
+      return {
+        transform : [{translateY : withTiming(bayMaxAnimation.value,{duration: 1200})}]
+      }
+    })
+      const messageContainerAnimationStyle = useAnimatedStyle(() => {
+      return {
+        transform : [{translateY : withTiming(messageContainerAnimation.value,{duration: 1200})}]
+      }
+    })
+
+    useEffect(() => {
+      initilizeListner();
+      launchAnimation();
+    },[])
+
+
+
+
   return (
     <View style={style.container}>
-      <Animated.View style={style.imageContainer}>
+      <Animated.View style={[style.imageContainer,animationsImageStyle]}>
         <Image source={require('../assets/images/launch.png')} style={style.img}></Image>
       </Animated.View>
 
-     <Animated.View style={style.gradianContainer}>
+     <Animated.View style={[style.gradianContainer,messageContainerAnimationStyle]}>
         <LinearGradient colors={bottomColor} style={style.gradiant}>
             <View style = {style.textContainer}>
                 <CustomText fontSize={34} fontFamily={Fonts.Theme}>BayMax!</CustomText>  
@@ -26,7 +69,6 @@ const SplashScreen = () => {
             </View>
         </LinearGradient>
       </Animated.View>
-
     </View>
   )
 }

@@ -81,7 +81,7 @@ android {
     namespace "com.baymax"
     defaultConfig {
         applicationId "com.baymax"
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 24
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"

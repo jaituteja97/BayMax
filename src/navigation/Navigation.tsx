@@ -14,7 +14,7 @@ const Navigation = () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName='SplashScreen' screenOptions={{headerShown : false}}>
         <Stack.Screen name='SplashScreen' component={SplashScreen}></Stack.Screen>
-        <Stack.Screen name='BayMaxScreen' component={BayMaxScreen}></Stack.Screen>
+        <Stack.Screen name='BayMaxScreen' component={BayMaxScreen} options={{animation : "fade"}}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   )

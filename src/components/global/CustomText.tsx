@@ -9,7 +9,7 @@ interface Props {
     variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "h7" | "h8" | "h9" | "body";
     fontSize?: number;
     fontFamily?: Fonts;
-    style: TextStyle | TextStyle[];
+    style?: TextStyle | TextStyle[];
     children?: React.ReactNode;
     numberOfLines?: number,
     onLayOut?: (event: object) => void
