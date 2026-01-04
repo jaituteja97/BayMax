@@ -35,6 +35,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSMotionUsageDescription</key>
+	<string>We track your steps to show daily activity and fitness progress.</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -74,7 +76,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSMotionUsageDescription</key>
-<string>We need access to your pedometer to track your daily steps.</string>
+
 </dict>
 </plist>
