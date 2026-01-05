@@ -4,11 +4,12 @@ import { Colors } from '../utils/Constant'
 import Background from '../components/bayMax/Background'
 import Loading from '../components/bayMax/Loading'
 import BigHero6 from '../components/bayMax/BigHero6'
-import Tts from 'react-native-tts'
+import Tts from 'react-native-tts';
 import Instruction from '../components/bayMax/Instruction'
 import Padometer from '../components/padometer/Padometer'
 import { main } from '../service/ApiService'
 import { prompt } from '../utils/data'
+import { stopTtsSafely } from '../utils/tt'
 
 
 
@@ -33,7 +34,7 @@ const BayMaxScreen: FC = () => {
         const initTts = async () => {
             try {
                 await Tts.setDefaultLanguage('hi-IN');
-                Tts.setDefaultRate(0.5, true); // Adding 'true' as second param skip error on some versions
+                Tts.setDefaultRate(0.5, true);
                 Tts.setDefaultPitch(1.0);
             } catch (err) {
                 console.log("TTS Init Error:", err);
@@ -45,11 +46,13 @@ const BayMaxScreen: FC = () => {
         let timer = setTimeout(() => {
             stateBlur();
         }, 2000);
+
         return () => {
             clearTimeout(timer);
-            Tts.stop(); 
+            stopTtsSafely();
         };
     }, []);
+
     const unBlur = () => {
         Animated.timing(blurOpacity, {
             toValue: 0,
@@ -140,16 +143,22 @@ const BayMaxScreen: FC = () => {
                 }}>
                 </Instruction></View>)
             }
-              {
-                showPedometer && (<View style={{ zIndex: 2, width: "100%", }}><Instruction message={message} onCross={() => {
-                    setShowLoader(true);
-                    stateBlur();
-                    setShowMessage("");
-                    setShowInstruction(false);
-
-                }}>
-                </Instruction></View>)
+            {
+                showPedometer && (
+                    <View style={{ zIndex: 2, width: "100%", justifyContent: "center", alignItems: "center" }}>
+                        <Padometer
+                            onCross={() => {
+                                setShowPadometer(false);
+                                setShowLoader(true);
+                                setShowInstruction(false);
+                                setShowMessage("");
+                                stateBlur();
+                            }}
+                        />
+                    </View>
+                )
             }
+
             {
                 showLoader && (<View style={styles.loaderContainer}>
                     <Loading></Loading>
